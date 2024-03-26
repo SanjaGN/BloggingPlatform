@@ -1,0 +1,29 @@
+<mat-toolbar>
+  <button mat-icon-button
+          class="icon"
+          (click)="toggleDrawer()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>Blogging platform</h1>
+  <span class="spacer"></span>
+  <h2>Welcome {{currentUser?.username}}</h2>
+  <button mat-icon-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">
+
+    <mat-list>
+      <mat-list-item (click)="loadTodosComponent(); activeTabIndex = 0" [ngClass]="{ 'active': activeTabIndex === 0 }">Todos</mat-list-item>
+      <mat-list-item (click)="loadPostsComponent(); activeTabIndex = 1" [ngClass]="{ 'active': activeTabIndex === 1 }">Posts</mat-list-item>
+      <mat-list-item (click)="loadAlbumsComponent(); activeTabIndex = 2" [ngClass]="{ 'active': activeTabIndex === 2 }">Albums</mat-list-item>
+    </mat-list>
+
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <ng-container appDynamicComponentHost></ng-container>
+  </div>
+
+</mat-drawer-container>
