@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -8,7 +8,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   registerForm: FormGroup;
   @ViewChild('usernameField') usernameField!: ElementRef;
   @ViewChild('emailField') emailField!: ElementRef;
@@ -22,6 +22,12 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]], // Email field is required and must be a valid email format
       password: ['', Validators.required] // Password field is required
     });
+  }
+
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   register(): void {

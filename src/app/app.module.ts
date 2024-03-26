@@ -19,6 +19,7 @@ import {MatDrawer, MatDrawerContainer} from "@angular/material/sidenav";
 import {MatIcon} from "@angular/material/icon";
 import {MatList, MatListItem} from "@angular/material/list";
 import {DashboardModule} from "./dashboard/dashboard.module";
+import {AuthGuard} from "./auth/auth.guard";
 
 @NgModule({
   declarations: [

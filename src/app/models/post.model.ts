@@ -1,5 +1,4 @@
 import {Comment} from "./comment.model";
-
 export interface Post {
   userId: number;
   id: number;

@@ -10,7 +10,7 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 export class PhotoModalComponent implements OnInit{
   @Input() photos: Photo[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { photos: Photo[] }) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.photos = this.data.photos;

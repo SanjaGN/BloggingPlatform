@@ -20,10 +20,9 @@
             <div *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
           </mat-error>
         </mat-form-field>
-        <!-- Display login failed message -->
+
         <div class="login-failed-message" *ngIf="loginFailedMessage">{{ loginFailedMessage }}</div>
 
-        <!-- Login button -->
         <button mat-raised-button color="primary" type="submit">Login</button>
       </form>
 

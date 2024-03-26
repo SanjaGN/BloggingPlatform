@@ -3,8 +3,6 @@ import {catchError} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {AuthService} from "../auth/auth.service";
-
-// Env
 import {environment} from '../../environments/environment';
 import {Todo} from "../models/todo.model";
 import {Album} from "../models/album.model";
@@ -38,20 +36,12 @@ export class DashboardService {
   }
 
 
-  fetchAlbums(): Observable<any[]> {
-    return this.authService.currentUser.pipe(
-      switchMap(currentUser => {
-        if (!currentUser) {
-          console.error('Current user not available.');
-          return of([]);
-        }
-        const userId = '?userId=' + currentUser.id;
-        return this.http.get<Album[]>(environment.apiUrl.concat('/albums', userId)).pipe(
-          catchError(error => {
-            console.error('Error fetching mock data:', error);
-            return of([]);
-          })
-        );
+  fetchAlbums(currentUserId: number | undefined): Observable<any[]> {
+    const userId = '?userId=' + currentUserId;
+    return this.http.get<Album[]>(environment.apiUrl.concat('/albums', userId)).pipe(
+      catchError(error => {
+        console.error('Error fetching mock data:', error);
+        return of([]);
       })
     );
   }
@@ -66,20 +56,21 @@ export class DashboardService {
     );
   }
 
-  fetchPosts(): Observable<any[]> {
-    return this.authService.currentUser.pipe(
-      switchMap(currentUser => {
-        if (!currentUser) {
-          console.error('Current user not available.');
-          return of([]);
-        }
-        const userId = '?userId=' + currentUser.id;
-        return this.http.get<any[]>(environment.apiUrl.concat('/posts', userId)).pipe(
-          catchError(error => {
-            console.error('Error fetching mock data:', error);
-            return of([]);
-          })
-        );
+  fetchPosts(currentUserId: number | undefined): Observable<any[]> {
+    const userId = '?userId=' + currentUserId;
+    return this.http.get<any[]>(environment.apiUrl.concat('/posts', userId)).pipe(
+      catchError(error => {
+        console.error('Error fetching mock data:', error);
+        return of([]);
+      })
+    );
+  }
+
+  deletePost(postId: number): Observable<number> {
+    return this.http.delete<number>(`${environment.apiUrl}/posts/${postId.toString()}`).pipe(
+      catchError(error => {
+        console.error('Error deleting post:', error);
+        return [];
       })
     );
   }

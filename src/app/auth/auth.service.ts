@@ -12,7 +12,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = false;
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
 
@@ -27,7 +26,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.loggedIn;
+    return !!this.currentUserSubject.value;
   }
 
   login(username: string, email: string): Observable<boolean> {
@@ -37,7 +36,6 @@ export class AuthService {
         if (authenticatedUser) {
           localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
           this.currentUserSubject.next(authenticatedUser);
-          this.loggedIn = true;
           return true;
         } else {
           return false;
@@ -69,7 +67,6 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.loggedIn = false;
     this.router.navigate(['/login']);
   }
 }

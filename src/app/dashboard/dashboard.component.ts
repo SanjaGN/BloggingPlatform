@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {MatDrawer} from "@angular/material/sidenav";
 import {DynamicComponentHostDirective} from "./dynamic-component-host.directive";
@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit{
   }
 
   toggleDrawer() {
-    this.drawer.toggle(); // Use toggle method on MatDrawer
+    this.drawer.toggle();
   }
 
   logout(): void {

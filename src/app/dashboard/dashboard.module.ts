@@ -6,6 +6,11 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { MatListModule } from "@angular/material/list";
 
 import { AppComponent } from "../app.component";
 import { DynamicComponentHostDirective } from "./dynamic-component-host.directive";
@@ -13,10 +18,7 @@ import { TodosComponent } from "./todos/todos.component";
 import { AlbumsComponent } from './albums/albums.component';
 import { PostsComponent } from './posts/posts.component';
 import { DashboardService } from "./dashboard.service";
-import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {MatButton} from "@angular/material/button";
 import { PhotoModalComponent } from './albums/photo-modal/photo-modal.component';
-import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     TodosComponent,
     AlbumsComponent,
     PostsComponent,
-    PhotoModalComponent,
+    PhotoModalComponent
   ],
   imports: [
     CommonModule,
@@ -34,12 +36,16 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatProgressSpinner,
-    MatButton,
-    MatDialogModule
+    MatDialogModule, // Add MatDialogModule here
+    MatProgressSpinnerModule, // Add MatProgressSpinnerModule here
+    MatIconModule, // Add MatIconModule here
+    MatButtonModule, // Add MatButtonModule here
+    MatListModule, // Add MatListModule here
   ],
   providers: [
     DashboardService,
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
   ],
   exports: [
     DynamicComponentHostDirective

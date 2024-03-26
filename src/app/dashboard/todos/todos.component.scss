@@ -1,10 +1,18 @@
-.todos-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+.container {
+  border: 1px solid grey;
+  background-color: white;
 }
 
-.todo-card {
-  width: 300px;
-  margin-bottom: 20px;
+.new-todo-card {
+  margin: 10px 0;
+}
+
+.new-todo-form {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.btn-add-todo {
+  margin-bottom: 15px;
 }

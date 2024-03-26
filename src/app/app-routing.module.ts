@@ -5,8 +5,7 @@ import { AuthGuard } from "./auth/auth.guard";
 import {StartPageComponent} from "./start-page/start-page.component";
 
 const routes: Routes = [
-  //{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: StartPageComponent},
   { path: '', component: StartPageComponent, pathMatch: 'full' } // Default route
 ];

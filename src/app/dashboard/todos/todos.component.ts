@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DashboardService} from "../dashboard.service";
 import {Todo} from "../../models/todo.model";
 import {AuthService} from "../../auth/auth.service";
@@ -11,7 +11,6 @@ import {AuthService} from "../../auth/auth.service";
 export class TodosComponent implements OnInit {
   todos: Todo[] = [];
   isLoading: boolean = false;
-  displayedColumns: string[] = ['id', 'title', 'completed'];
   currentUserId: number | undefined;
   addingNewTodo: boolean = false;
   newTodo: Todo = {
@@ -20,10 +19,10 @@ export class TodosComponent implements OnInit {
     title: '',
     completed: false
   };
+  selectedTodos: Todo[] = []; // Array to store selected todos
 
   constructor(private dashboardService: DashboardService,
-              private authService: AuthService,
-              private cdr: ChangeDetectorRef) {
+              private authService: AuthService) {
 
   }
 
@@ -42,11 +41,10 @@ export class TodosComponent implements OnInit {
 
         this.isLoading = false;
         if (Array.isArray(response)) {
-          // Filter todos with userId === 1
-          this.todos = response.filter(todo => todo.userId === 1);
+          this.todos = response.filter(todo => todo.userId === userId);
         } else if (response instanceof Object) {
           // If response is a single object, check its userId
-          this.todos = response.userId === 1 ? [response] : [];
+          this.todos = response.userId === userId ? [response] : [];
         }
       }, (error) => {
         console.log('Failed to fetch todos list', error);
@@ -62,7 +60,7 @@ export class TodosComponent implements OnInit {
 
   addNewTodo(): void {
     this.addingNewTodo = true;
-    this.newTodo = {}; // Reset new todo object
+    this.newTodo = {};
   }
 
   saveNewTodo(): void {
@@ -72,14 +70,7 @@ export class TodosComponent implements OnInit {
       (response) => {
 
         this.newTodo.id = response.id;
-
-        // Push a copy of the new todo into the todos array
         this.todos.push({ ...this.newTodo });
-
-        // Trigger change detection manually
-        this.cdr.detectChanges();
-
-        // Reset addingNewTodo flag to hide the form
         this.addingNewTodo = false;
       },
       (error) => {

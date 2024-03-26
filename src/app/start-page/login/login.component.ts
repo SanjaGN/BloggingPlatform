@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Import FormBuilder and Validators
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from "../../auth/auth.service";
 
 @Component({
@@ -8,23 +8,29 @@ import { AuthService } from "../../auth/auth.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  loginForm: FormGroup; // Define loginForm of type FormGroup
+export class LoginComponent implements OnInit{
+  loginForm: FormGroup;
 
   loginFailedMessage: string = '';
 
   constructor(private authService: AuthService,
               private router: Router,
-              private formBuilder: FormBuilder) { // Inject FormBuilder
+              private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required], // Username field is required
       email: ['', [Validators.required, Validators.email]], // Email field is required and must be a valid email format
     });
   }
 
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
   login(): void {
-    if (this.loginForm.valid) { // Check if the form is valid
-      const { username, email } = this.loginForm.value; // Destructure username and email from form value
+    if (this.loginForm.valid) {
+      const { username, email } = this.loginForm.value;
       this.authService.login(username, email).subscribe(
         success => {
           if (success) {

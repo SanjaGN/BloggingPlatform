@@ -2,8 +2,11 @@
 <ng-template #postList>
   <div class="posts-container" *ngIf="posts.length > 0">
     <mat-card *ngFor="let post of posts" class="posts-card">
-      <mat-card-header>
+      <mat-card-header style="display: flex; justify-content: space-between;">
         <mat-card-title>Title: {{ post.title }}</mat-card-title>
+        <button mat-icon-button color="warn" (click)="deletePost(post)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </mat-card-header>
       <mat-card-content>
         <p>{{ post.body }}</p>
@@ -18,18 +21,16 @@
       </mat-card-content>
 
       <mat-card-actions>
-
         <button mat-raised-button
                 color="primary"
                 (click)="loadComments(post)">{{ post.showComments ? 'Hide comments' : 'Show comments' }}
         </button>
       </mat-card-actions>
     </mat-card>
-
   </div>
 
   <div *ngIf="posts.length === 0">
-    <p>No todos available.</p>
+    <p>No posts available.</p>
   </div>
 </ng-template>
 
