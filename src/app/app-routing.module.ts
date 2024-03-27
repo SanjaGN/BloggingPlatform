@@ -7,7 +7,7 @@ import {StartPageComponent} from "./start-page/start-page.component";
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: StartPageComponent},
-  { path: '', component: StartPageComponent, pathMatch: 'full' } // Default route
+  { path: '', component: StartPageComponent, pathMatch: 'full' }, // Default route
 ];
 
 @NgModule({

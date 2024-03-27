@@ -15,7 +15,7 @@ export class DashboardService {
               private authService: AuthService) {
   }
 
-  fetchTodos(userId: number): Observable<any[]> {
+  fetchTodos(userId: number | undefined): Observable<any[]> {
     const currentUserId = '?userId=' + userId;
     return this.http.get<Todo[]>(environment.apiUrl.concat('/todos', currentUserId)).pipe(
       catchError(error => {
@@ -33,6 +33,16 @@ export class DashboardService {
         return of({ userId: 0, id: 0, title: 'Untitled', completed: false });
       })
     );
+  }
+
+  fetchAllTodos(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(environment.apiUrl.concat('/todos'));
+  }
+
+  fetchMoreTodos(count: number): Observable<Todo[]> {
+    // Make an HTTP GET request to your backend API to fetch more todos
+    // You can pass the number of todos to load as a query parameter, for example, '/todos?count=20'
+    return this.http.get<Todo[]>(`${environment.apiUrl}/todos?_limit=${count}`);
   }
 
 

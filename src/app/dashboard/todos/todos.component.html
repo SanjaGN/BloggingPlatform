@@ -3,8 +3,14 @@
 
   <button mat-raised-button
           color="primary"
-          class="btn-add-todo"
+          class="btn-margin-bottom"
           (click)="addNewTodo()">Add New Todo</button>
+  <button mat-raised-button
+          color="primary"
+          class="btn-margin-bottom"
+          (click)="toggleShowAllTodos()">
+    {{ showAllTodos ? 'Show My Todos' : 'Show All Todos' }}
+  </button>
 
   <div *ngIf="addingNewTodo" >
     <mat-card class="new-todo-card">
@@ -32,15 +38,18 @@
     </mat-card>
   </div>
 
-  <div *ngIf="todos.length > 0" class="container">
-    <mat-selection-list *ngIf="todos.length > 0" [(ngModel)]="selectedTodos">
-      <mat-list-option *ngFor="let todo of todos" [value]="todo" [selected]="todo.completed">
+  <div *ngIf="displayedTodos.length > 0"
+       #todosContainer
+       class="container">
+    <mat-selection-list *ngIf="displayedTodos.length > 0" [(ngModel)]="selectedTodos">
+      <mat-list-option *ngFor="let todo of displayedTodos" [value]="todo" [selected]="todo.completed">
         {{ todo.title }}
       </mat-list-option>
     </mat-selection-list>
+    <mat-spinner *ngIf="isLoadingMore"></mat-spinner>
 
   </div>
-  <div *ngIf="todos.length === 0">
+  <div *ngIf="displayedTodos.length === 0">
     <p>No todos available.</p>
   </div>
 </ng-template>
